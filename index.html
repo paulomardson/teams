@@ -283,29 +283,51 @@
 
                 // Using html2canvas to capture the teams element as an image
                 html2canvas(teams).then((canvas) => {
-                    // Convert canvas to image
                     canvas.toBlob((blob) => {
-                        // Copy the image to clipboard
-                        navigator.clipboard
-                            .write([new ClipboardItem({ "image/png": blob })])
-                            .then(() => {
-                                // Show tooltip
-                                const tooltip =
-                                    document.getElementById("tooltip");
-                                tooltip.style.opacity = 1;
-                                setTimeout(() => {
-                                    tooltip.style.opacity = 0;
-                                }, 2000);
-                            })
-                            .catch((err) =>
-                                console.error("Failed to copy image: ", err)
-                            );
-
-                        // Also allow downloading the image
+                        // Allow downloading the image
                         const link = document.createElement("a");
                         link.href = URL.createObjectURL(blob);
-                        link.download = "teams.png";
+                        link.download = "teams.jpeg";
                         link.click();
+
+                        // For iOS and other mobile devices, prompt to save the image
+                        if (
+                            navigator.share &&
+                            /Mobi|Android/i.test(navigator.userAgent)
+                        ) {
+                            const file = new File([blob], "teams.jpeg", {
+                                type: "image/jpeg",
+                            });
+                            navigator
+                                .share({
+                                    files: [file],
+                                    title: "Teams Image",
+                                    text: "Check out the teams!",
+                                })
+                                .catch((error) =>
+                                    console.log("Error sharing:", error)
+                                );
+                        }
+
+                        // Copy the image to clipboard if supported
+                        if (navigator.clipboard && navigator.clipboard.write) {
+                            navigator.clipboard
+                                .write([
+                                    new ClipboardItem({ "image/jpeg": blob }),
+                                ])
+                                .then(() => {
+                                    // Show tooltip
+                                    const tooltip =
+                                        document.getElementById("tooltip");
+                                    tooltip.style.opacity = 1;
+                                    setTimeout(() => {
+                                        tooltip.style.opacity = 0;
+                                    }, 2000);
+                                })
+                                .catch((err) =>
+                                    console.error("Failed to copy image: ", err)
+                                );
+                        }
                     });
                 });
             }
