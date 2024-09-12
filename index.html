@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Team Divider</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
+        <div class="bg-white rounded-lg shadow-lg p-8 max-w-xl w-full">
+            <h1 class="text-2xl font-bold mb-6 text-center">Team Divider</h1>
+            <textarea
+                id="nameList"
+                rows="6"
+                class="w-full p-4 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Paste your list of names here..."
+            ></textarea>
+            <div class="flex gap-2 mb-6">
+                <button
+                    onclick="divideTeams()"
+                    class="flex-1 bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors"
+                >
+                    Divide into Teams
+                </button>
+                <button
+                    onclick="resetTeams()"
+                    class="flex-1 bg-red-500 text-white py-2 rounded hover:bg-red-600 transition-colors"
+                >
+                    Reset
+                </button>
+            </div>
+            <div id="teams" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div class="bg-red-100 p-4 rounded">
+                    <h2 class="text-lg font-semibold text-red-700 mb-2">
+                        Red Team
+                    </h2>
+                    <ul id="redTeam" class="list-disc list-inside"></ul>
+                </div>
+                <div class="bg-white p-4 rounded border border-gray-200">
+                    <h2 class="text-lg font-semibold text-gray-700 mb-2">
+                        White Team
+                    </h2>
+                    <ul id="whiteTeam" class="list-disc list-inside"></ul>
+                </div>
+                <div class="bg-black p-4 rounded text-white">
+                    <h2 class="text-lg font-semibold text-white mb-2">
+                        Black Team
+                    </h2>
+                    <ul id="blackTeam" class="list-disc list-inside"></ul>
+                </div>
+            </div>
+            <button
+                onclick="generateImage()"
+                class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition-colors"
+            >
+                Generate Image
+            </button>
+        </div>
+
+        <!-- Import html2canvas library -->
+        <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+        <!-- Ensure scripts are loaded correctly -->
+        <script>
+            function divideTeams() {
+                // Get the list of names from the textarea, split by new lines, and filter out empty lines
+                const names = document
+                    .getElementById("nameList")
+                    .value.split("\n")
+                    .map((name) => name.trim())
+                    .filter((name) => name);
+
+                // Shuffle the names array
+                const shuffledNames = names.sort(() => Math.random() - 0.5);
+
+                // Clear the current team lists
+                document.getElementById("redTeam").innerHTML = "";
+                document.getElementById("whiteTeam").innerHTML = "";
+                document.getElementById("blackTeam").innerHTML = "";
+
+                // Divide into teams
+                shuffledNames.forEach((name, index) => {
+                    const team = index % 3;
+                    if (team === 0) {
+                        document.getElementById(
+                            "redTeam"
+                        ).innerHTML += `<li>${name}</li>`;
+                    } else if (team === 1) {
+                        document.getElementById(
+                            "whiteTeam"
+                        ).innerHTML += `<li>${name}</li>`;
+                    } else {
+                        document.getElementById(
+                            "blackTeam"
+                        ).innerHTML += `<li>${name}</li>`;
+                    }
+                });
+            }
+
+            function resetTeams() {
+                document.getElementById("nameList").value = "";
+                document.getElementById("redTeam").innerHTML = "";
+                document.getElementById("whiteTeam").innerHTML = "";
+                document.getElementById("blackTeam").innerHTML = "";
+            }
+
+            function generateImage() {
+                const teams = document.getElementById("teams");
+
+                // Using html2canvas to capture the teams element as an image
+                html2canvas(teams).then((canvas) => {
+                    // Convert canvas to image
+                    const imageData = canvas.toDataURL("image/png");
+                    const link = document.createElement("a");
+                    link.href = imageData;
+                    link.download = "teams.png";
+                    link.click();
+                });
+            }
+        </script>
+    </body>
+</html>
