@@ -3,69 +3,227 @@
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="viewport"
+            content="viewport-fit=cover, width=device-width, initial-scale=1.0"
+        />
         <title>Team Divider</title>
         <link
             href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
             rel="stylesheet"
         />
+        <link
+            href="https://unpkg.com/heroicons@2.0.13/outline/heroicons.min.css"
+            rel="stylesheet"
+        />
     </head>
     <body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
-        <div class="bg-white rounded-lg shadow-lg p-8 max-w-xl w-full">
+        <div class="bg-white rounded-lg shadow-lg p-8 max-w-xl w-full relative">
             <h1 class="text-2xl font-bold mb-6 text-center">Team Divider</h1>
-            <textarea
-                id="nameList"
-                rows="6"
-                class="w-full p-4 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Paste your list of names here..."
-            ></textarea>
+            <div class="mb-4">
+                <button
+                    onclick="pasteFromClipboard()"
+                    class="bg-black text-white py-1 px-4 rounded hover:bg-black-600 transition-colors mb-2 flex items-center gap-2"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z"
+                        />
+                    </svg>
+                    Paste List
+                </button>
+                <textarea
+                    id="nameList"
+                    rows="6"
+                    class="w-full p-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Paste your list of names here..."
+                ></textarea>
+            </div>
             <div class="flex gap-2 mb-6">
                 <button
                     onclick="divideTeams()"
-                    class="flex-1 bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors"
+                    class="flex-1 bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
                 >
-                    Divide into Teams
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
+                        />
+                    </svg>
+                    Make Teams
                 </button>
                 <button
                     onclick="resetTeams()"
-                    class="flex-1 bg-red-500 text-white py-2 rounded hover:bg-red-600 transition-colors"
+                    class="flex-1 bg-red-500 text-white py-2 rounded hover:bg-red-600 transition-colors flex items-center justify-center gap-2"
                 >
-                    Reset
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m6.75 12H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+                        />
+                    </svg>
+                    Reset List
                 </button>
             </div>
+            <button
+                onclick="randomizeTeams()"
+                class="w-full bg-indigo-500 text-white py-2 mb-4 rounded hover:bg-indigo-600 transition-colors flex items-center justify-center gap-2"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+                    />
+                </svg>
+                Randomize Teams
+            </button>
             <div id="teams" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 <div class="bg-red-100 p-4 rounded">
                     <h2 class="text-lg font-semibold text-red-700 mb-2">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 inline"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
+                            />
+                        </svg>
                         Red Team
                     </h2>
-                    <ul id="redTeam" class="list-disc list-inside"></ul>
+                    <ul id="redTeam" class="space-y-2"></ul>
                 </div>
                 <div class="bg-white p-4 rounded border border-gray-200">
                     <h2 class="text-lg font-semibold text-gray-700 mb-2">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 inline"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
+                            />
+                        </svg>
                         White Team
                     </h2>
-                    <ul id="whiteTeam" class="list-disc list-inside"></ul>
+                    <ul id="whiteTeam" class="space-y-2"></ul>
                 </div>
                 <div class="bg-black p-4 rounded text-white">
                     <h2 class="text-lg font-semibold text-white mb-2">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 inline"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
+                            />
+                        </svg>
                         Black Team
                     </h2>
-                    <ul id="blackTeam" class="list-disc list-inside"></ul>
+                    <ul id="blackTeam" class="space-y-2"></ul>
                 </div>
             </div>
             <button
                 onclick="generateImage()"
-                class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition-colors"
+                class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition-colors flex items-center justify-center gap-2 relative"
             >
-                Generate Image
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z"
+                    />
+                </svg>
+                Share
+                <span
+                    id="tooltip"
+                    class="absolute top-0 right-0 mt-2 mr-2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 transition-opacity duration-300"
+                    >Copied!</span
+                >
             </button>
         </div>
 
         <!-- Import html2canvas library -->
         <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
-        <!-- Ensure scripts are loaded correctly -->
+        <!-- Script -->
         <script>
+            function pasteFromClipboard() {
+                // Check if the Clipboard API is supported
+                if (navigator.clipboard) {
+                    navigator.clipboard
+                        .readText()
+                        .then((text) => {
+                            document.getElementById("nameList").value = text;
+                        })
+                        .catch((err) => {
+                            console.error(
+                                "Failed to read clipboard contents: ",
+                                err
+                            );
+                            alert("Failed to paste from clipboard.");
+                        });
+                } else {
+                    alert("Clipboard API not supported in your browser.");
+                }
+            }
+
             function divideTeams() {
                 // Get the list of names from the textarea, split by new lines, and filter out empty lines
                 const names = document
@@ -85,18 +243,21 @@
                 // Divide into teams
                 shuffledNames.forEach((name, index) => {
                     const team = index % 3;
+                    const listItem = `<li class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 text-gray-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                    <span>${name}</span>
+                </li>`;
                     if (team === 0) {
-                        document.getElementById(
-                            "redTeam"
-                        ).innerHTML += `<li>${name}</li>`;
+                        document.getElementById("redTeam").innerHTML +=
+                            listItem;
                     } else if (team === 1) {
-                        document.getElementById(
-                            "whiteTeam"
-                        ).innerHTML += `<li>${name}</li>`;
+                        document.getElementById("whiteTeam").innerHTML +=
+                            listItem;
                     } else {
-                        document.getElementById(
-                            "blackTeam"
-                        ).innerHTML += `<li>${name}</li>`;
+                        document.getElementById("blackTeam").innerHTML +=
+                            listItem;
                     }
                 });
             }
@@ -108,17 +269,44 @@
                 document.getElementById("blackTeam").innerHTML = "";
             }
 
+            function randomizeTeams() {
+                // Shuffle and re-divide the teams using the existing divideTeams function
+                if (document.getElementById("nameList").value.trim() !== "") {
+                    divideTeams();
+                } else {
+                    alert("Please paste or input a list of names first.");
+                }
+            }
+
             function generateImage() {
                 const teams = document.getElementById("teams");
 
                 // Using html2canvas to capture the teams element as an image
                 html2canvas(teams).then((canvas) => {
                     // Convert canvas to image
-                    const imageData = canvas.toDataURL("image/png");
-                    const link = document.createElement("a");
-                    link.href = imageData;
-                    link.download = "teams.png";
-                    link.click();
+                    canvas.toBlob((blob) => {
+                        // Copy the image to clipboard
+                        navigator.clipboard
+                            .write([new ClipboardItem({ "image/png": blob })])
+                            .then(() => {
+                                // Show tooltip
+                                const tooltip =
+                                    document.getElementById("tooltip");
+                                tooltip.style.opacity = 1;
+                                setTimeout(() => {
+                                    tooltip.style.opacity = 0;
+                                }, 2000);
+                            })
+                            .catch((err) =>
+                                console.error("Failed to copy image: ", err)
+                            );
+
+                        // Also allow downloading the image
+                        const link = document.createElement("a");
+                        link.href = URL.createObjectURL(blob);
+                        link.download = "teams.png";
+                        link.click();
+                    });
                 });
             }
         </script>
