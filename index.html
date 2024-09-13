@@ -418,6 +418,17 @@
             function generateImage() {
                 const teams = document.getElementById("teams");
 
+                // Save the current styles to revert after screenshot
+                const originalWidth = teams.style.width;
+                const originalPadding = teams.style.padding;
+                const originalDisplay = teams.style.display;
+
+                // Temporarily apply styles for desktop-like screenshot
+                teams.style.width = "500px"; // Set a desktop-like width
+                teams.style.padding = "20px"; // Add padding for margins
+                teams.style.display = "flex"; // Ensure horizontal layout if needed
+
+                // Capture the screenshot
                 html2canvas(teams).then((canvas) => {
                     canvas.toBlob((blob) => {
                         const isMobile = /Mobi|Android/i.test(
@@ -462,6 +473,11 @@
                                 );
                         }
                     });
+
+                    // Revert the styles back to original to maintain responsiveness
+                    teams.style.width = originalWidth;
+                    teams.style.padding = originalPadding;
+                    teams.style.display = originalDisplay;
                 });
             }
 
