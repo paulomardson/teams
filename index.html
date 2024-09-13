@@ -46,7 +46,25 @@
                     rows="6"
                     class="w-full p-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Paste your list of names here..."
+                    oninput="updateCounter()"
                 ></textarea>
+                <div class="flex items-center justify-between mt-2">
+                    <span id="playerCount" class="text-sm text-gray-600"
+                        >0 players</span
+                    >
+                    <div class="flex items-center gap-2">
+                        <label for="teamCount" class="text-sm text-gray-600"
+                            >Number of Teams:</label
+                        >
+                        <input
+                            id="teamCount"
+                            type="number"
+                            min="2"
+                            value="3"
+                            class="w-16 p-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                </div>
             </div>
             <div class="flex gap-2 mb-6">
                 <button
@@ -110,68 +128,10 @@
                 </svg>
                 Randomize Teams
             </button>
-            <div id="teams" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                <div class="bg-red-100 p-4 rounded">
-                    <h2 class="text-lg font-semibold text-red-700 mb-2">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 inline"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
-                            />
-                        </svg>
-                        Red Team
-                    </h2>
-                    <ul id="redTeam" class="space-y-2"></ul>
-                </div>
-                <div class="bg-white p-4 rounded border border-gray-200">
-                    <h2 class="text-lg font-semibold text-gray-700 mb-2">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 inline"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
-                            />
-                        </svg>
-                        White Team
-                    </h2>
-                    <ul id="whiteTeam" class="space-y-2"></ul>
-                </div>
-                <div class="bg-black p-4 rounded text-white">
-                    <h2 class="text-lg font-semibold text-white mb-2">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 inline"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
-                            />
-                        </svg>
-                        Black Team
-                    </h2>
-                    <ul id="blackTeam" class="space-y-2"></ul>
-                </div>
-            </div>
+            <div
+                id="teams"
+                class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4"
+            ></div>
             <button
                 onclick="generateImage()"
                 class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition-colors flex items-center justify-center gap-2 relative"
@@ -205,12 +165,12 @@
         <!-- Script -->
         <script>
             function pasteFromClipboard() {
-                // Check if the Clipboard API is supported
                 if (navigator.clipboard) {
                     navigator.clipboard
                         .readText()
                         .then((text) => {
                             document.getElementById("nameList").value = text;
+                            updateCounter();
                         })
                         .catch((err) => {
                             console.error(
@@ -224,53 +184,93 @@
                 }
             }
 
+            function updateCounter() {
+                const names = document
+                    .getElementById("nameList")
+                    .value.split("\n")
+                    .filter((name) => name.trim() !== "");
+                document.getElementById(
+                    "playerCount"
+                ).textContent = `${names.length} players`;
+            }
+
             function divideTeams() {
-                // Get the list of names from the textarea, split by new lines, and filter out empty lines
                 const names = document
                     .getElementById("nameList")
                     .value.split("\n")
                     .map((name) => name.trim())
                     .filter((name) => name);
 
-                // Shuffle the names array
+                const teamCount =
+                    parseInt(document.getElementById("teamCount").value) || 3;
+
+                if (teamCount < 2) {
+                    alert("Please enter at least 2 teams.");
+                    return;
+                }
+
                 const shuffledNames = names.sort(() => Math.random() - 0.5);
+                document.getElementById("teams").innerHTML = "";
 
-                // Clear the current team lists
-                document.getElementById("redTeam").innerHTML = "";
-                document.getElementById("whiteTeam").innerHTML = "";
-                document.getElementById("blackTeam").innerHTML = "";
+                const teamColors = [
+                    "red",
+                    "white",
+                    "black",
+                    "blue",
+                    "green",
+                    "yellow",
+                    "purple",
+                    "pink",
+                    "gray",
+                ];
+                const teams = Array.from({ length: teamCount }, (_, i) => ({
+                    name: `Team ${i + 1}`,
+                    color:
+                        i < 3
+                            ? teamColors[i]
+                            : teamColors[i % teamColors.length], // Default first three teams: Red, White, Black
+                    members: [],
+                }));
 
-                // Divide into teams
                 shuffledNames.forEach((name, index) => {
-                    const team = index % 3;
-                    const listItem = `<li class="flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 text-gray-500">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                    </svg>
-                    <span>${name}</span>
-                </li>`;
-                    if (team === 0) {
-                        document.getElementById("redTeam").innerHTML +=
-                            listItem;
-                    } else if (team === 1) {
-                        document.getElementById("whiteTeam").innerHTML +=
-                            listItem;
-                    } else {
-                        document.getElementById("blackTeam").innerHTML +=
-                            listItem;
-                    }
+                    const teamIndex = index % teamCount;
+                    teams[teamIndex].members.push(name);
+                });
+
+                teams.forEach((team, i) => {
+                    const textColor =
+                        team.color === "black"
+                            ? "text-white"
+                            : `text-${team.color}-700`;
+                    const bgColor =
+                        team.color === "black"
+                            ? "bg-black"
+                            : `bg-${team.color}-100`;
+                    const teamContainer = document.createElement("div");
+                    teamContainer.className = `${bgColor} p-4 rounded`;
+                    teamContainer.innerHTML = `<h2 class="text-lg font-semibold ${textColor} mb-2">${
+                        team.name
+                    }</h2><ul class="space-y-2">${team.members
+                        .map(
+                            (member) => `<li class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 text-gray-500">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg> <span class="${textColor}">${member}</span></li>`
+                        )
+                        .join("")}</ul>`;
+                    document.getElementById("teams").appendChild(teamContainer);
                 });
             }
 
             function resetTeams() {
                 document.getElementById("nameList").value = "";
-                document.getElementById("redTeam").innerHTML = "";
-                document.getElementById("whiteTeam").innerHTML = "";
-                document.getElementById("blackTeam").innerHTML = "";
+                document.getElementById("teams").innerHTML = "";
+                document.getElementById("playerCount").textContent =
+                    "0 players";
+                document.getElementById("teamCount").value = 3;
             }
 
             function randomizeTeams() {
-                // Shuffle and re-divide the teams using the existing divideTeams function
                 if (document.getElementById("nameList").value.trim() !== "") {
                     divideTeams();
                 } else {
@@ -281,22 +281,19 @@
             function generateImage() {
                 const teams = document.getElementById("teams");
 
-                // Using html2canvas to capture the teams element as an image
                 html2canvas(teams).then((canvas) => {
                     canvas.toBlob((blob) => {
-                        // Allow downloading the image
                         const link = document.createElement("a");
                         link.href = URL.createObjectURL(blob);
-                        link.download = "teams.jpeg";
+                        link.download = "teams.png";
                         link.click();
 
-                        // For iOS and other mobile devices, prompt to save the image
                         if (
                             navigator.share &&
                             /Mobi|Android/i.test(navigator.userAgent)
                         ) {
-                            const file = new File([blob], "teams.jpeg", {
-                                type: "image/jpeg",
+                            const file = new File([blob], "teams.png", {
+                                type: "image/png",
                             });
                             navigator
                                 .share({
@@ -309,14 +306,12 @@
                                 );
                         }
 
-                        // Copy the image to clipboard if supported
                         if (navigator.clipboard && navigator.clipboard.write) {
                             navigator.clipboard
                                 .write([
-                                    new ClipboardItem({ "image/jpeg": blob }),
+                                    new ClipboardItem({ "image/png": blob }),
                                 ])
                                 .then(() => {
-                                    // Show tooltip
                                     const tooltip =
                                         document.getElementById("tooltip");
                                     tooltip.style.opacity = 1;
