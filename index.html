@@ -293,33 +293,55 @@
             }
 
             function renderTeam(team) {
-                const textColor =
-                    team.color === "black"
-                        ? "text-white"
-                        : `text-${team.color}-700`;
                 const bgColor =
                     team.color === "black"
-                        ? "bg-black"
+                        ? "bg-gray-200"
                         : `bg-${team.color}-100`;
+
+                // Always place the GK at the top
+                const membersList = [...team.members];
+                if (team.goalkeeper) {
+                    const goalkeeperIndex = membersList.indexOf(
+                        team.goalkeeper
+                    );
+                    if (goalkeeperIndex > -1) {
+                        membersList.splice(goalkeeperIndex, 1); // Remove GK from current position
+                        membersList.unshift(team.goalkeeper); // Add GK to the top
+                    }
+                }
+
                 const teamContainer = document.createElement("div");
                 teamContainer.className = `${bgColor} p-4 rounded`;
-                teamContainer.innerHTML = `<h2 class="text-lg font-semibold ${textColor} mb-2">${
-                    team.name
-                } <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 rounded-md bg-gray-50 ring-1 ring-inset ring-gray-500/10">(${
-                    team.members.length
-                } players)</span></h2><ul class="space-y-2">${team.members
-                    .map(
-                        (member) => `<li class="flex items-center gap-2">
+                teamContainer.innerHTML = `
+        <h2 class="mb-2 text-lg font-semibold">${team.name}
+            <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 rounded-md bg-gray-50 ring-1 ring-inset ring-gray-500/10">
+                (${team.members.length} players)
+            </span>
+        </h2>
+        <ul class="space-y-2">
+            ${membersList
+                .map(
+                    (member) => `
+                <li class="flex items-center gap-2">
                     <span class="badge ${
                         member === team.goalkeeper
                             ? "bg-blue-500 text-white px-2 py-0.5 rounded"
                             : ""
-                    }">${member === team.goalkeeper ? "GK" : ""}</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                    }">
+                        ${
+                            member === team.goalkeeper
+                                ? "GK"
+                                : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                    </svg> <span class="${textColor}">${member}</span></li>`
-                    )
-                    .join("")}</ul>`;
+                    </svg> `
+                        }
+                    </span>
+                    
+                    <span class="font-normal">${member}</span>
+                </li>`
+                )
+                .join("")}
+        </ul>`;
                 document.getElementById("teams").appendChild(teamContainer);
             }
 
@@ -336,23 +358,46 @@
                 const teamContainers =
                     document.getElementById("teams").children;
                 Array.from(teamContainers).forEach((container) => {
-                    const teamMembers = container.querySelectorAll("ul > li");
-                    const randomIndex = Math.floor(
-                        Math.random() * teamMembers.length
-                    );
-                    teamMembers.forEach((member, idx) => {
-                        const badge = member.querySelector(".badge");
-                        if (badge) {
-                            if (idx === randomIndex) {
-                                badge.className =
-                                    "badge bg-blue-500 text-white px-2 py-0.5 rounded";
-                                badge.textContent = "GK";
-                            } else {
-                                badge.className = "badge";
-                                badge.textContent = "";
-                            }
-                        }
-                    });
+                    const teamMembers = Array.from(
+                        container.querySelectorAll("ul > li span:not(.badge)")
+                    ).map((span) => span.textContent);
+
+                    if (teamMembers.length > 0) {
+                        // Randomly assign a GK
+                        const randomIndex = Math.floor(
+                            Math.random() * teamMembers.length
+                        );
+                        const newGoalkeeper = teamMembers[randomIndex];
+
+                        // Render the team with the new GK on top
+                        const membersList = [...teamMembers];
+                        membersList.splice(randomIndex, 1); // Remove GK from current position
+                        membersList.unshift(newGoalkeeper); // Add GK to the top
+
+                        // Update UI
+                        container.querySelector("ul").innerHTML = membersList
+                            .map(
+                                (member, index) => `
+                            <li class="flex items-center gap-2">
+                                <span class="badge ${
+                                    index === 0
+                                        ? "bg-blue-500 text-white px-2 py-0.5 rounded"
+                                        : ""
+                                }">
+                                    ${
+                                        index === 0
+                                            ? "GK"
+                                            : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                </svg>`
+                                    }
+                                </span>
+                                 
+                                <span class="font-normal text-gray-700">${member}</span>
+                            </li>`
+                            )
+                            .join("");
+                    }
                 });
             }
 
