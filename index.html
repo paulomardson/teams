@@ -179,10 +179,34 @@
 
                 Randomize Keepers
             </button>
+            <button
+                onclick="kickOff()"
+                class="flex items-center justify-center w-full gap-2 py-2 mt-2 text-white transition-colors bg-purple-500 rounded hover:bg-purple-600"
+            >
+                Kick-off
+            </button>
         </div>
 
-        <!-- Import html2canvas library -->
+        <!-- Modal for Kick-off -->
+        <div
+            id="kickoffModal"
+            class="fixed inset-0 flex items-center justify-center hidden bg-black bg-opacity-50"
+        >
+            <div class="w-1/2 p-6 bg-white rounded-lg">
+                <h2 class="mb-4 text-lg font-bold text-center">Kick-off!</h2>
+                <p id="kickoffTeams" class="text-center"></p>
+                <button
+                    onclick="closeKickoffModal()"
+                    class="px-4 py-2 mt-4 text-white bg-red-500 rounded hover:bg-red-600"
+                >
+                    Close
+                </button>
+            </div>
+        </div>
+
+        <!-- Import libraries -->
         <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
         <!-- Script -->
         <script>
@@ -392,6 +416,41 @@
                         }
                     });
                 });
+            }
+
+            function kickOff() {
+                const teamContainers = Array.from(
+                    document.getElementById("teams").children
+                );
+                if (teamContainers.length < 2) {
+                    alert("You need at least two teams to start a kick-off.");
+                    return;
+                }
+
+                const randomTeams = teamContainers
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, 2);
+                const teamNames = randomTeams.map(
+                    (container) => container.querySelector("h2").textContent
+                );
+
+                document.getElementById(
+                    "kickoffTeams"
+                ).textContent = `${teamNames[0]} vs ${teamNames[1]}`;
+                document
+                    .getElementById("kickoffModal")
+                    .classList.remove("hidden");
+
+                // Confetti animation
+                confetti({
+                    particleCount: 150,
+                    spread: 60,
+                    origin: { y: 0.6 },
+                });
+            }
+
+            function closeKickoffModal() {
+                document.getElementById("kickoffModal").classList.add("hidden");
             }
         </script>
     </body>
