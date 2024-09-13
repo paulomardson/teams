@@ -17,17 +17,17 @@
             rel="stylesheet"
         />
     </head>
-    <body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
-        <div class="bg-white rounded-lg shadow-lg p-8 max-w-xl w-full relative">
-            <h1 class="text-2xl font-bold mb-6 text-center">Team Divider</h1>
+    <body class="flex items-center justify-center min-h-screen p-6 bg-gray-100">
+        <div class="relative w-full max-w-xl p-8 bg-white rounded-lg shadow-lg">
+            <h1 class="mb-6 text-2xl font-bold text-center">Team Divider</h1>
             <div class="mb-4">
                 <button
                     onclick="pasteFromClipboard()"
-                    class="bg-black text-white py-1 px-4 rounded hover:bg-black-600 transition-colors mb-2 flex items-center gap-2"
+                    class="flex items-center gap-2 px-4 py-1 mb-2 text-white transition-colors bg-black rounded hover:bg-black-600"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
+                        class="w-5 h-5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
@@ -69,11 +69,11 @@
             <div class="flex gap-2 mb-6">
                 <button
                     onclick="divideTeams()"
-                    class="flex-1 bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
+                    class="flex items-center justify-center flex-1 gap-2 py-2 text-white transition-colors bg-blue-500 rounded hover:bg-blue-600"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
+                        class="w-5 h-5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
@@ -89,11 +89,11 @@
                 </button>
                 <button
                     onclick="resetTeams()"
-                    class="flex-1 bg-red-500 text-white py-2 rounded hover:bg-red-600 transition-colors flex items-center justify-center gap-2"
+                    class="flex items-center justify-center flex-1 gap-2 py-2 text-white transition-colors bg-red-500 rounded hover:bg-red-600"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5"
+                        class="w-5 h-5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
@@ -110,11 +110,11 @@
             </div>
             <button
                 onclick="randomizeTeams()"
-                class="w-full bg-indigo-500 text-white py-2 mb-4 rounded hover:bg-indigo-600 transition-colors flex items-center justify-center gap-2"
+                class="flex items-center justify-center w-full gap-2 py-2 mb-4 text-white transition-colors bg-indigo-500 rounded hover:bg-indigo-600"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
+                    class="w-5 h-5"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
@@ -123,22 +123,23 @@
                     <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+                        d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
                     />
                 </svg>
+
                 Randomize Teams
             </button>
             <div
                 id="teams"
-                class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4"
+                class="grid grid-cols-1 gap-4 mb-4 md:grid-cols-3"
             ></div>
             <button
                 onclick="generateImage()"
-                class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition-colors flex items-center justify-center gap-2 relative"
+                class="relative flex items-center justify-center w-full gap-2 py-2 text-white transition-colors bg-green-500 rounded hover:bg-green-600"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
+                    class="w-5 h-5"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
@@ -153,9 +154,30 @@
                 Share
                 <span
                     id="tooltip"
-                    class="absolute top-0 right-0 mt-2 mr-2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 transition-opacity duration-300"
+                    class="absolute top-0 right-0 px-2 py-1 mt-2 mr-2 text-xs text-white transition-opacity duration-300 bg-gray-800 rounded opacity-0"
                     >Copied!</span
                 >
+            </button>
+            <button
+                onclick="randomizeKeepers()"
+                class="flex items-center justify-center w-full gap-2 py-2 mt-2 text-white transition-colors bg-yellow-500 rounded hover:bg-yellow-600"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M10.05 4.575a1.575 1.575 0 1 0-3.15 0v3m3.15-3v-1.5a1.575 1.575 0 0 1 3.15 0v1.5m-3.15 0 .075 5.925m3.075.75V4.575m0 0a1.575 1.575 0 0 1 3.15 0V15M6.9 7.575a1.575 1.575 0 1 0-3.15 0v8.175a6.75 6.75 0 0 0 6.75 6.75h2.018a5.25 5.25 0 0 0 3.712-1.538l1.732-1.732a5.25 5.25 0 0 0 1.538-3.712l.003-2.024a.668.668 0 0 1 .198-.471 1.575 1.575 0 1 0-2.228-2.228 3.818 3.818 0 0 0-1.12 2.687M6.9 7.575V12m6.27 4.318A4.49 4.49 0 0 1 16.35 15m.002 0h-.002"
+                    />
+                </svg>
+
+                Randomize Keepers
             </button>
         </div>
 
@@ -228,8 +250,9 @@
                     color:
                         i < 3
                             ? teamColors[i]
-                            : teamColors[i % teamColors.length], // Default first three teams: Red, White, Black
+                            : teamColors[i % teamColors.length],
                     members: [],
+                    goalkeeper: null,
                 }));
 
                 shuffledNames.forEach((name, index) => {
@@ -237,28 +260,71 @@
                     teams[teamIndex].members.push(name);
                 });
 
-                teams.forEach((team, i) => {
-                    const textColor =
-                        team.color === "black"
-                            ? "text-white"
-                            : `text-${team.color}-700`;
-                    const bgColor =
-                        team.color === "black"
-                            ? "bg-black"
-                            : `bg-${team.color}-100`;
-                    const teamContainer = document.createElement("div");
-                    teamContainer.className = `${bgColor} p-4 rounded`;
-                    teamContainer.innerHTML = `<h2 class="text-lg font-semibold ${textColor} mb-2">${
-                        team.name
-                    }</h2><ul class="space-y-2">${team.members
-                        .map(
-                            (member) => `<li class="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 text-gray-500">
+                teams.forEach((team) => {
+                    assignGoalkeeper(team);
+                    renderTeam(team);
+                });
+            }
+
+            function renderTeam(team) {
+                const textColor =
+                    team.color === "black"
+                        ? "text-white"
+                        : `text-${team.color}-700`;
+                const bgColor =
+                    team.color === "black"
+                        ? "bg-black"
+                        : `bg-${team.color}-100`;
+                const teamContainer = document.createElement("div");
+                teamContainer.className = `${bgColor} p-4 rounded`;
+                teamContainer.innerHTML = `<h2 class="text-lg font-semibold ${textColor} mb-2">${
+                    team.name
+                }</h2><ul class="space-y-2">${team.members
+                    .map(
+                        (member) => `<li class="flex items-center gap-2">
+                        <span class="badge ${
+                            member === team.goalkeeper
+                                ? "bg-blue-500 text-white px-2 py-0.5 rounded"
+                                : ""
+                        }">${member === team.goalkeeper ? "GK" : ""}</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                         </svg> <span class="${textColor}">${member}</span></li>`
-                        )
-                        .join("")}</ul>`;
-                    document.getElementById("teams").appendChild(teamContainer);
+                    )
+                    .join("")}</ul>`;
+                document.getElementById("teams").appendChild(teamContainer);
+            }
+
+            function assignGoalkeeper(team) {
+                if (team.members.length > 0) {
+                    team.goalkeeper =
+                        team.members[
+                            Math.floor(Math.random() * team.members.length)
+                        ];
+                }
+            }
+
+            function randomizeKeepers() {
+                const teamContainers =
+                    document.getElementById("teams").children;
+                Array.from(teamContainers).forEach((container) => {
+                    const teamMembers = container.querySelectorAll("ul > li");
+                    const randomIndex = Math.floor(
+                        Math.random() * teamMembers.length
+                    );
+                    teamMembers.forEach((member, idx) => {
+                        const badge = member.querySelector(".badge");
+                        if (badge) {
+                            if (idx === randomIndex) {
+                                badge.className =
+                                    "badge bg-blue-500 text-white px-2 py-0.5 rounded";
+                                badge.textContent = "GK";
+                            } else {
+                                badge.className = "badge";
+                                badge.textContent = "";
+                            }
+                        }
+                    });
                 });
             }
 
@@ -283,12 +349,10 @@
 
                 html2canvas(teams).then((canvas) => {
                     canvas.toBlob((blob) => {
-                        // Check if the device is mobile
                         const isMobile = /Mobi|Android/i.test(
                             navigator.userAgent
                         );
 
-                        // For mobile devices, offer share without force download
                         if (navigator.share && isMobile) {
                             const file = new File([blob], "teams.png", {
                                 type: "image/png",
@@ -303,14 +367,12 @@
                                     console.log("Error sharing:", error)
                                 );
                         } else {
-                            // For desktop, offer download
                             const link = document.createElement("a");
                             link.href = URL.createObjectURL(blob);
                             link.download = "teams.png";
                             link.click();
                         }
 
-                        // Copy the image to clipboard if supported
                         if (navigator.clipboard && navigator.clipboard.write) {
                             navigator.clipboard
                                 .write([
