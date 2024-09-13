@@ -283,15 +283,13 @@
 
                 html2canvas(teams).then((canvas) => {
                     canvas.toBlob((blob) => {
-                        const link = document.createElement("a");
-                        link.href = URL.createObjectURL(blob);
-                        link.download = "teams.png";
-                        link.click();
+                        // Check if the device is mobile
+                        const isMobile = /Mobi|Android/i.test(
+                            navigator.userAgent
+                        );
 
-                        if (
-                            navigator.share &&
-                            /Mobi|Android/i.test(navigator.userAgent)
-                        ) {
+                        // For mobile devices, offer share without force download
+                        if (navigator.share && isMobile) {
                             const file = new File([blob], "teams.png", {
                                 type: "image/png",
                             });
@@ -304,8 +302,15 @@
                                 .catch((error) =>
                                     console.log("Error sharing:", error)
                                 );
+                        } else {
+                            // For desktop, offer download
+                            const link = document.createElement("a");
+                            link.href = URL.createObjectURL(blob);
+                            link.download = "teams.png";
+                            link.click();
                         }
 
+                        // Copy the image to clipboard if supported
                         if (navigator.clipboard && navigator.clipboard.write) {
                             navigator.clipboard
                                 .write([
