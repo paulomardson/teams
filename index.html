@@ -313,35 +313,34 @@
                 const teamContainer = document.createElement("div");
                 teamContainer.className = `${bgColor} p-4 rounded`;
                 teamContainer.innerHTML = `
-        <h2 class="mb-2 text-lg font-semibold">${team.name}
-            <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 rounded-md bg-gray-50 ring-1 ring-inset ring-gray-500/10">
-                (${team.members.length} players)
-            </span>
-        </h2>
-        <ul class="space-y-2">
-            ${membersList
-                .map(
-                    (member) => `
-                <li class="flex items-center gap-2">
-                    <span class="badge ${
-                        member === team.goalkeeper
-                            ? "bg-blue-500 text-white px-2 py-0.5 rounded"
-                            : ""
-                    }">
-                        ${
-                            member === team.goalkeeper
-                                ? "GK"
-                                : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                    </svg> `
-                        }
-                    </span>
-                    
-                    <span class="font-normal">${member}</span>
-                </li>`
-                )
-                .join("")}
-        </ul>`;
+                    <h2 class="mb-2 text-lg font-semibold">${team.name}
+                        <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 rounded-md bg-gray-50 ring-1 ring-inset ring-gray-500/10">
+                            (${team.members.length} players)
+                        </span>
+                    </h2>
+                    <ul class="space-y-2">
+                        ${membersList
+                            .map(
+                                (member) => `
+                            <li class="flex items-center gap-2">
+                                <span class="badge ${
+                                    member === team.goalkeeper
+                                        ? "bg-blue-500 text-white px-2 py-0.5 rounded"
+                                        : ""
+                                }">
+                                    ${
+                                        member === team.goalkeeper
+                                            ? "GK"
+                                            : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                </svg>`
+                                    }
+                                </span>
+                                <span class="font-normal text-gray-700">${member}</span>
+                            </li>`
+                            )
+                            .join("")}
+                    </ul>`;
                 document.getElementById("teams").appendChild(teamContainer);
             }
 
@@ -392,7 +391,6 @@
                                 </svg>`
                                     }
                                 </span>
-                                 
                                 <span class="font-normal text-gray-700">${member}</span>
                             </li>`
                             )
