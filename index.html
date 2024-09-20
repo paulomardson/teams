@@ -486,7 +486,21 @@
                             </div>
                         </div>
                     </div>
-                    <div id="scoreHistory" class="mt-4"></div>
+                    <div id="scoreHistory" class="grid grid-cols-2 gap-4 mt-4">
+                        <!-- Team 1 Goals -->
+                        <div>
+                            <div id="team1Goals" class="space-y-2">
+                                <!-- Team 1 goals will appear here -->
+                            </div>
+                        </div>
+
+                        <!-- Team 2 Goals -->
+                        <div>
+                            <div id="team2Goals" class="space-y-2">
+                                <!-- Team 2 goals will appear here -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Timer Section -->
@@ -938,45 +952,46 @@
                     origin: { y: 0.6 },
                 });
 
-                // Add the time of the goal and the icon to the score history
-                const scoreHistory = document.getElementById("scoreHistory");
-                const newScoreEntry = document.createElement("div");
-                newScoreEntry.classList.add(
-                    "flex",
-                    "items-center",
-                    "gap-2",
-                    "mt-2"
-                );
+                // Add the time of the goal to the respective team's score history
+                const goalEntry = document.createElement("div");
+                goalEntry.classList.add("flex", "items-center", "gap-2");
 
-                // Add the formatted game time when the goal was scored
+                // Time text
                 const timeText = document.createElement("span");
                 timeText.textContent = `Goal at: ${timeString}`;
                 timeText.classList.add("text-sm", "text-gray-700");
 
-                // Add the SVG icon
+                // SVG Icon
                 const svgIcon = document.createElement("div");
                 svgIcon.innerHTML = `
-                    <svg fill="#000000" version="1.1" xmlns="http://www.w3.org/2000/svg" 
-                        width="24px" height="24px" viewBox="0 0 31.492 31.492" xml:space="preserve">
+                    <svg fill="#000000" version="1.1" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 31.492 31.492" xml:space="preserve">
                         <g>
                             <path d="M15.796,0.049c-0.017,0-0.033,0.002-0.05,0.003c-0.017,0-0.033-0.003-0.05-0.003C7.028,0.049,0,7.076,0,15.745
-                                s7.028,15.698,15.696,15.698c0.017,0,0.033-0.002,0.05-0.004c0.017,0,0.033,0.004,0.05,0.004c8.668,0,15.696-7.028,15.696-15.697
-                                S24.464,0.049,15.796,0.049z M16.826,4.605l4.087-0.47c1.543,0.683,2.922,1.665,4.069,2.871l0.521,4.164l-5.051,1.327l-3.627-2.525
-                                V4.605z M6.509,7.006c1.148-1.206,2.527-2.188,4.07-2.871l4.087,0.47v5.367l-3.627,2.525L5.988,11.17L6.509,7.006z M4.594,21.889
-                                c-0.878-1.58-1.418-3.365-1.55-5.267l2.155-3.593l5.116,1.344l1.294,4.27l-3.331,4.965L4.594,21.889z M18.65,28.107
-                                c-0.92,0.212-1.872,0.334-2.854,0.336c-0.017,0-0.033-0.002-0.05-0.002s-0.033,0.002-0.05,0.002
-                                c-0.983-0.002-1.935-0.124-2.854-0.336l-2.885-3.411l3.254-4.847h2.535h2.535l3.254,4.847L18.65,28.107z M23.214,23.607
-                                l-3.331-4.965l1.295-4.27l5.115-1.344l2.155,3.593c-0.132,1.901-0.673,3.687-1.55,5.267L23.214,23.607z"/>
+                            s7.028,15.698,15.696,15.698c0.017,0,0.033-0.002,0.05-0.004c0.017,0,0.033,0.004,0.05,0.004c8.668,0,15.696-7.028,15.696-15.697
+                            S24.464,0.049,15.796,0.049z M16.826,4.605l4.087-0.47c1.543,0.683,2.922,1.665,4.069,2.871l0.521,4.164l-5.051,1.327l-3.627-2.525
+                            V4.605z M6.509,7.006c1.148-1.206,2.527-2.188,4.07-2.871l4.087,0.47v5.367l-3.627,2.525L5.988,11.17L6.509,7.006z M4.594,21.889
+                            c-0.878-1.58-1.418-3.365-1.55-5.267l2.155-3.593l5.116,1.344l1.294,4.27l-3.331,4.965L4.594,21.889z M18.65,28.107
+                            c-0.92,0.212-1.872,0.334-2.854,0.336c-0.017,0-0.033-0.002-0.05-0.002s-0.033,0.002-0.05,0.002
+                            c-0.983-0.002-1.935-0.124-2.854-0.336l-2.885-3.411l3.254-4.847h2.535h2.535l3.254,4.847L18.65,28.107z M23.214,23.607
+                            l-3.331-4.965l1.295-4.27l5.115-1.344l2.155,3.593c-0.132,1.901-0.673,3.687-1.55,5.267L23.214,23.607z"/>
                         </g>
                     </svg>
                 `;
 
-                // Append the timestamp and icon to the new score entry
-                newScoreEntry.appendChild(svgIcon);
-                newScoreEntry.appendChild(timeText);
+                // Append the goal time and icon to the goal entry
+                goalEntry.appendChild(svgIcon);
+                goalEntry.appendChild(timeText);
 
-                // Append the new score entry to the history
-                scoreHistory.appendChild(newScoreEntry);
+                // Append the goal entry to the respective team's goal history
+                if (team === "team1") {
+                    document
+                        .getElementById("team1Goals")
+                        .appendChild(goalEntry);
+                } else {
+                    document
+                        .getElementById("team2Goals")
+                        .appendChild(goalEntry);
+                }
             }
 
             function decrementScore(team) {
@@ -986,9 +1001,22 @@
                 ) {
                     if (team === "team1") {
                         team1Score--;
-                    } else {
+                        // Remove the last goal from team1 history
+                        const team1Goals =
+                            document.getElementById("team1Goals");
+                        if (team1Goals.lastChild) {
+                            team1Goals.removeChild(team1Goals.lastChild);
+                        }
+                    } else if (team === "team2") {
                         team2Score--;
+                        // Remove the last goal from team2 history
+                        const team2Goals =
+                            document.getElementById("team2Goals");
+                        if (team2Goals.lastChild) {
+                            team2Goals.removeChild(team2Goals.lastChild);
+                        }
                     }
+                    // Update the score display after removing the goal
                     updateScoreDisplay();
                 }
             }
