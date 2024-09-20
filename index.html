@@ -16,8 +16,159 @@
             href="https://unpkg.com/heroicons@2.0.13/outline/heroicons.min.css"
             rel="stylesheet"
         />
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap");
+            :root {
+                --color-background: #31037d;
+                --axis-x: 1px;
+                --axis-y: 1rem;
+                --delay: 10;
+                --color-black: #000;
+                --color-white: #fff;
+                --color-orange: #d49c3d;
+                --color-red: #d14b3d;
+                --color-violet: #cf52eb;
+                --color-blue: #44a3f7;
+                --color-green: #5acb3c;
+                --color-yellow: #debf40;
+                --color-foreground: var(--color-white);
+                --font-name: "Teko";
+            }
+
+            .c-rainbow {
+                counter-reset: rainbow;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: block;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                z-index: 9999; /* High z-index to be on top */
+            }
+
+            .c-rainbow__layer {
+                --text-color: var(--color-foreground);
+                counter-increment: rainbow;
+                font-size: 3rem;
+                color: var(--text-color);
+                text-shadow: -1px -1px 0 var(--color-black),
+                    1px -1px 0 var(--color-black), -1px 1px 0 var(--color-black),
+                    1px 1px 0 var(--color-black), 4px 4px 0 rgba(0, 0, 0, 0.2);
+                animation: rainbow 1.5s ease-in-out infinite;
+            }
+
+            .c-rainbow__layer:nth-child(1) {
+                animation-delay: calc(1 / var(--delay) * 1s);
+                left: calc(var(--axis-x) * 1);
+                z-index: -10;
+            }
+
+            .c-rainbow__layer:nth-child(2) {
+                animation-delay: calc(2 / var(--delay) * 1s);
+                left: calc(var(--axis-x) * 2);
+                z-index: -20;
+            }
+
+            .c-rainbow__layer:nth-child(3) {
+                animation-delay: calc(3 / var(--delay) * 1s);
+                left: calc(var(--axis-x) * 3);
+                z-index: -30;
+            }
+
+            .c-rainbow__layer:nth-child(4) {
+                animation-delay: calc(4 / var(--delay) * 1s);
+                left: calc(var(--axis-x) * 4);
+                z-index: -40;
+            }
+
+            .c-rainbow__layer:nth-child(5) {
+                animation-delay: calc(5 / var(--delay) * 1s);
+                left: calc(var(--axis-x) * 5);
+                z-index: -50;
+            }
+
+            .c-rainbow__layer:nth-child(6) {
+                animation-delay: calc(6 / var(--delay) * 1s);
+                left: calc(var(--axis-x) * 6);
+                z-index: -60;
+            }
+
+            .c-rainbow__layer:nth-child(7) {
+                animation-delay: calc(7 / var(--delay) * 1s);
+                left: calc(var(--axis-x) * 7);
+                z-index: -70;
+            }
+
+            .c-rainbow__layer:not(:first-child) {
+                position: absolute;
+                top: 0;
+            }
+
+            .c-rainbow__layer--white {
+                --text-color: var(--color-white);
+            }
+
+            .c-rainbow__layer--orange {
+                --text-color: var(--color-orange);
+            }
+
+            .c-rainbow__layer--red {
+                --text-color: var(--color-red);
+            }
+
+            .c-rainbow__layer--violet {
+                --text-color: var(--color-violet);
+            }
+
+            .c-rainbow__layer--blue {
+                --text-color: var(--color-blue);
+            }
+
+            .c-rainbow__layer--green {
+                --text-color: var(--color-green);
+            }
+
+            .c-rainbow__layer--yellow {
+                --text-color: var(--color-yellow);
+            }
+
+            @keyframes rainbow {
+                0%,
+                100% {
+                    transform: translateY(var(--axis-y));
+                }
+                50% {
+                    transform: translateY(calc(var(--axis-y) * -1));
+                }
+            }
+        </style>
     </head>
     <body class="flex items-center justify-center min-h-screen p-6 bg-gray-100">
+        <!-- animation -->
+        <div id="rainbowAnimation" class="hidden">
+            <ul class="c-rainbow">
+                <li class="c-rainbow__layer c-rainbow__layer--white">
+                    GOOOAL!
+                </li>
+                <li class="c-rainbow__layer c-rainbow__layer--orange">
+                    GOOOAL!
+                </li>
+                <li class="c-rainbow__layer c-rainbow__layer--red">GOOOAL!</li>
+                <li class="c-rainbow__layer c-rainbow__layer--violet">
+                    GOOOAL!
+                </li>
+                <li class="c-rainbow__layer c-rainbow__layer--blue">GOOOAL!</li>
+                <li class="c-rainbow__layer c-rainbow__layer--green">
+                    GOOOAL!
+                </li>
+                <li class="c-rainbow__layer c-rainbow__layer--yellow">
+                    GOOOAL!
+                </li>
+            </ul>
+        </div>
+
         <div class="relative w-full max-w-xl p-8 bg-white rounded-lg shadow-lg">
             <h1 class="mb-6 text-2xl font-bold text-center">Team Divider</h1>
             <div class="mb-4">
@@ -133,6 +284,28 @@
                 id="teams"
                 class="grid grid-cols-1 gap-4 mb-4 md:grid-cols-3"
             ></div>
+
+            <div class="flex gap-2 h-100 mb-2">
+                <button
+                    onclick="randomizeKeepers()"
+                    class="flex items-center justify-center w-full gap-2 py-2 mt-2 text-white transition-colors bg-yellow-500 rounded hover:bg-yellow-600"
+                >
+                    Randomize Keepers
+                </button>
+                <button
+                    onclick="kickOff()"
+                    class="flex items-center justify-center w-full gap-2 py-10 mt-2 text-white transition-colors bg-purple-500 rounded hover:bg-purple-600"
+                >
+                    Kick-off
+                </button>
+
+                <button
+                    class="flex items-center justify-center w-full gap-2 py-10 mt-2 text-white transition-colors bg-blue-600 rounded hover:bg-blue-700"
+                    onclick="showGameModal()"
+                >
+                    Start Game
+                </button>
+            </div>
             <button
                 onclick="generateImage()"
                 class="relative flex items-center justify-center w-full gap-2 py-2 text-white transition-colors bg-green-500 rounded hover:bg-green-600"
@@ -158,33 +331,6 @@
                     >Copied!</span
                 >
             </button>
-            <button
-                onclick="randomizeKeepers()"
-                class="flex items-center justify-center w-full gap-2 py-2 mt-2 text-white transition-colors bg-yellow-500 rounded hover:bg-yellow-600"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="w-5 h-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M10.05 4.575a1.575 1.575 0 1 0-3.15 0v3m3.15-3v-1.5a1.575 1.575 0 0 1 3.15 0v1.5m-3.15 0 .075 5.925m3.075.75V4.575m0 0a1.575 1.575 0 0 1 3.15 0V15M6.9 7.575a1.575 1.575 0 1 0-3.15 0v8.175a6.75 6.75 0 0 0 6.75 6.75h2.018a5.25 5.25 0 0 0 3.712-1.538l1.732-1.732a5.25 5.25 0 0 0 1.538-3.712l.003-2.024a.668.668 0 0 1 .198-.471 1.575 1.575 0 1 0-2.228-2.228 3.818 3.818 0 0 0-1.12 2.687M6.9 7.575V12m6.27 4.318A4.49 4.49 0 0 1 16.35 15m.002 0h-.002"
-                    />
-                </svg>
-
-                Randomize Keepers
-            </button>
-            <button
-                onclick="kickOff()"
-                class="flex items-center justify-center w-full gap-2 py-2 mt-2 text-white transition-colors bg-purple-500 rounded hover:bg-purple-600"
-            >
-                Kick-off
-            </button>
         </div>
 
         <!-- Modal for Kick-off -->
@@ -201,6 +347,183 @@
                 >
                     Close
                 </button>
+            </div>
+        </div>
+
+        <!-- Game Modal -->
+        <div
+            id="gameModal"
+            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50"
+        >
+            <div
+                class="w-full max-w-md bg-white rounded-xl shadow-lg space-y-0"
+            >
+                <!-- Header -->
+                <header
+                    class="py-8 bg-blue-800 flex items-center justify-between rounded-t-lg relative"
+                >
+                    <!-- Close Button -->
+                    <button
+                        onclick="closeGameModal()"
+                        class="absolute left-4 bg-transparent b-0 h-6 w-6 flex items-center justify-center text-white"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-6 h-6"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                            />
+                        </svg>
+                    </button>
+
+                    <!-- Centered Title -->
+                    <h1
+                        class="flex-grow text-center text-lg font-bold text-white"
+                    >
+                        Game
+                    </h1>
+                </header>
+
+                <!-- Score Section -->
+                <div class="relative px-6 pb-8">
+                    <!-- Blue Background -->
+                    <div class="bg-blue-800 absolute inset-0 z-0 h-28"></div>
+
+                    <!-- Score Content -->
+                    <div
+                        class="flex relative bg-white rounded-lg p-6 items-center justify-between z-10 shadow-md pb-4"
+                    >
+                        <!-- Team 1 -->
+                        <div class="flex-row items-center">
+                            <div class="flex flex-col items-center">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    class="h-16 w-16"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M12.516 2.17a.75.75 0 0 0-1.032 0 11.209 11.209 0 0 1-7.877 3.08.75.75 0 0 0-.722.515A12.74 12.74 0 0 0 2.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 0 0 .374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 0 0-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08Zm3.094 8.016a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                                <span
+                                    id="team1Name"
+                                    class="text-sm font-semibold"
+                                    >Black</span
+                                >
+                            </div>
+                            <div
+                                class="flex w-full items-center justify-center mt-2 border rounded-lg divide-x"
+                            >
+                                <button
+                                    onclick="decrementScore('team1')"
+                                    class="px-4 py-2 text-xl font-bold text-black"
+                                >
+                                    -
+                                </button>
+                                <button
+                                    onclick="incrementScore('team1')"
+                                    class="px-4 py-2 text-xl font-bold text-black"
+                                >
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Score Display -->
+                        <div
+                            class="text-3xl font-bold flex flex-col items-center"
+                            id="scoreDisplay"
+                        >
+                            <div>0 : 0</div>
+                        </div>
+
+                        <!-- Team 2 -->
+                        <div class="flex-row items-center">
+                            <div class="flex flex-col items-center">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    class="h-16 w-16"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M12.516 2.17a.75.75 0 0 0-1.032 0 11.209 11.209 0 0 1-7.877 3.08.75.75 0 0 0-.722.515A12.74 12.74 0 0 0 2.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 0 0 .374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 0 0-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08Zm3.094 8.016a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                                <span
+                                    id="team2Name"
+                                    class="text-sm font-semibold"
+                                    >Red</span
+                                >
+                            </div>
+                            <div
+                                class="flex w-full items-center justify-center mt-2 border rounded-lg divide-x"
+                            >
+                                <button
+                                    onclick="decrementScore('team2')"
+                                    class="px-4 py-2 text-xl font-bold text-black"
+                                >
+                                    -
+                                </button>
+                                <button
+                                    onclick="incrementScore('team2')"
+                                    class="px-4 py-2 text-xl font-bold text-black"
+                                >
+                                    +
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="scoreHistory" class="mt-4"></div>
+                </div>
+
+                <!-- Timer Section -->
+                <div class="bg-gray-100 rounded-lg p-4 text-center">
+                    <h3 class="text-lg font-semibold mb-2">Timer</h3>
+                    <input
+                        id="timerInput"
+                        type="text"
+                        value="10:00:00"
+                        class="text-4xl font-bold mb-4 text-center w-full bg-transparent border-none focus:outline-none"
+                    />
+                    <div class="flex justify-center space-x-4">
+                        <button
+                            onclick="startTimer()"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg"
+                        >
+                            Start
+                        </button>
+                        <button
+                            onclick="stopTimer()"
+                            class="px-4 py-2 bg-red-600 text-white rounded-lg"
+                        >
+                            Stop
+                        </button>
+                        <button
+                            onclick="resetTimer()"
+                            class="px-4 py-2 bg-gray-600 text-white rounded-lg"
+                        >
+                            Restart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Field Placeholder -->
+                <div class="bg-green-200 rounded-lg p-4 text-center">
+                    <p class="font-semibold">Field Placeholder</p>
+                </div>
             </div>
         </div>
 
@@ -313,34 +636,36 @@
                 const teamContainer = document.createElement("div");
                 teamContainer.className = `${bgColor} p-4 rounded`;
                 teamContainer.innerHTML = `
-                    <h2 class="mb-2 text-lg font-semibold">${team.name}
-                        <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 rounded-md bg-gray-50 ring-1 ring-inset ring-gray-500/10">
-                            (${team.members.length} players)
-                        </span>
-                    </h2>
-                    <ul class="space-y-2">
-                        ${membersList
-                            .map(
-                                (member) => `
-                            <li class="flex items-center gap-2">
-                                <span class="badge ${
-                                    member === team.goalkeeper
-                                        ? "bg-blue-500 text-white px-2 py-0.5 rounded"
-                                        : ""
-                                }">
-                                    ${
-                                        member === team.goalkeeper
-                                            ? "GK"
-                                            : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                                </svg>`
-                                    }
-                                </span>
-                                <span class="font-normal text-gray-700">${member}</span>
-                            </li>`
-                            )
-                            .join("")}
-                    </ul>`;
+                                <h2 class="mb-2 text-lg font-semibold">${
+                                    team.name
+                                }
+                                    <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 rounded-md bg-gray-50 ring-1 ring-inset ring-gray-500/10">
+                                        (${team.members.length} players)
+                                    </span>
+                                </h2>
+                                <ul class="space-y-2">
+                                    ${membersList
+                                        .map(
+                                            (member) => `
+                                        <li class="flex items-center gap-2">
+                                            <span class="badge ${
+                                                member === team.goalkeeper
+                                                    ? "bg-blue-500 text-white px-2 py-0.5 rounded"
+                                                    : ""
+                                            }">
+                                                ${
+                                                    member === team.goalkeeper
+                                                        ? "GK"
+                                                        : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                            </svg>`
+                                                }
+                                            </span>
+                                            <span class="font-normal text-gray-700">${member}</span>
+                                        </li>`
+                                        )
+                                        .join("")}
+                                </ul>`;
                 document.getElementById("teams").appendChild(teamContainer);
             }
 
@@ -377,22 +702,22 @@
                         container.querySelector("ul").innerHTML = membersList
                             .map(
                                 (member, index) => `
-                            <li class="flex items-center gap-2">
-                                <span class="badge ${
-                                    index === 0
-                                        ? "bg-blue-500 text-white px-2 py-0.5 rounded"
-                                        : ""
-                                }">
-                                    ${
-                                        index === 0
-                                            ? "GK"
-                                            : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                                </svg>`
-                                    }
-                                </span>
-                                <span class="font-normal text-gray-700">${member}</span>
-                            </li>`
+                                        <li class="flex items-center gap-2">
+                                            <span class="badge ${
+                                                index === 0
+                                                    ? "bg-blue-500 text-white px-2 py-0.5 rounded"
+                                                    : ""
+                                            }">
+                                                ${
+                                                    index === 0
+                                                        ? "GK"
+                                                        : `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                            </svg>`
+                                                }
+                                            </span>
+                                            <span class="font-normal text-gray-700">${member}</span>
+                                        </li>`
                             )
                             .join("");
                     }
@@ -413,6 +738,20 @@
                 } else {
                     alert("Please paste or input a list of names first.");
                 }
+            }
+
+            function swapTeams() {
+                // Simple swap logic; you can enhance this based on your teams
+                const team1Name = document.getElementById("team1Name");
+                const team2Name = document.getElementById("team2Name");
+                const tempName = team1Name.textContent;
+                team1Name.textContent = team2Name.textContent;
+                team2Name.textContent = tempName;
+
+                const team1Shield = document.getElementById("team1Shield").src;
+                document.getElementById("team1Shield").src =
+                    document.getElementById("team2Shield").src;
+                document.getElementById("team2Shield").src = team1Shield;
             }
 
             function generateImage() {
@@ -514,6 +853,251 @@
 
             function closeKickoffModal() {
                 document.getElementById("kickoffModal").classList.add("hidden");
+            }
+
+            let team1Score = 0;
+            let team2Score = 0;
+            let timer;
+            let time; // Time will be set dynamically from input field
+
+            function showGameModal() {
+                // Get the list of teams
+                const teamContainers = Array.from(
+                    document.getElementById("teams").children
+                );
+
+                // Randomly select two teams
+                if (teamContainers.length >= 2) {
+                    const randomTeams = teamContainers
+                        .sort(() => Math.random() - 0.5)
+                        .slice(0, 2);
+
+                    // Extract the color name from the full team name
+                    const team1FullName =
+                        randomTeams[0].querySelector("h2").textContent;
+                    const team2FullName =
+                        randomTeams[1].querySelector("h2").textContent;
+
+                    // Get the color (first word before any space or '(')
+                    const team1Color = team1FullName.split(" ")[0];
+                    const team2Color = team2FullName.split(" ")[0];
+
+                    // Display only the color name in the game modal
+                    document.getElementById("team1Name").textContent =
+                        team1Color;
+                    document.getElementById("team2Name").textContent =
+                        team2Color;
+
+                    // Open the game modal
+                    document
+                        .getElementById("gameModal")
+                        .classList.remove("hidden");
+                } else {
+                    alert("You need at least two teams to start a game.");
+                }
+            }
+
+            function closeGameModal() {
+                document.getElementById("gameModal").classList.add("hidden");
+            }
+
+            function incrementScore(team) {
+                if (!timerRunning) {
+                    alert(
+                        "The timer is stopped. Start the timer to add scores."
+                    );
+                    return; // Exit the function if the timer is not running
+                }
+
+                // Increment score based on team
+                if (team === "team1") {
+                    team1Score++;
+                } else {
+                    team2Score++;
+                }
+
+                // Calculate the goal time based on the elapsed time
+                const goalSeconds = elapsedTime;
+                const minutes = Math.floor(goalSeconds / 60);
+                const seconds = goalSeconds % 60;
+
+                // Format the goal time as minutes' seconds"
+                const timeString = `${minutes}'${String(seconds).padStart(
+                    2,
+                    "0"
+                )}"`;
+
+                // Update the score display
+                updateScoreDisplay();
+
+                // Trigger the rainbow animation and confetti
+                triggerRainbowAnimation();
+                confetti({
+                    particleCount: 150,
+                    spread: 60,
+                    origin: { y: 0.6 },
+                });
+
+                // Add the time of the goal and the icon to the score history
+                const scoreHistory = document.getElementById("scoreHistory");
+                const newScoreEntry = document.createElement("div");
+                newScoreEntry.classList.add(
+                    "flex",
+                    "items-center",
+                    "gap-2",
+                    "mt-2"
+                );
+
+                // Add the formatted game time when the goal was scored
+                const timeText = document.createElement("span");
+                timeText.textContent = `Goal at: ${timeString}`;
+                timeText.classList.add("text-sm", "text-gray-700");
+
+                // Add the SVG icon
+                const svgIcon = document.createElement("div");
+                svgIcon.innerHTML = `
+                    <svg fill="#000000" version="1.1" xmlns="http://www.w3.org/2000/svg" 
+                        width="24px" height="24px" viewBox="0 0 31.492 31.492" xml:space="preserve">
+                        <g>
+                            <path d="M15.796,0.049c-0.017,0-0.033,0.002-0.05,0.003c-0.017,0-0.033-0.003-0.05-0.003C7.028,0.049,0,7.076,0,15.745
+                                s7.028,15.698,15.696,15.698c0.017,0,0.033-0.002,0.05-0.004c0.017,0,0.033,0.004,0.05,0.004c8.668,0,15.696-7.028,15.696-15.697
+                                S24.464,0.049,15.796,0.049z M16.826,4.605l4.087-0.47c1.543,0.683,2.922,1.665,4.069,2.871l0.521,4.164l-5.051,1.327l-3.627-2.525
+                                V4.605z M6.509,7.006c1.148-1.206,2.527-2.188,4.07-2.871l4.087,0.47v5.367l-3.627,2.525L5.988,11.17L6.509,7.006z M4.594,21.889
+                                c-0.878-1.58-1.418-3.365-1.55-5.267l2.155-3.593l5.116,1.344l1.294,4.27l-3.331,4.965L4.594,21.889z M18.65,28.107
+                                c-0.92,0.212-1.872,0.334-2.854,0.336c-0.017,0-0.033-0.002-0.05-0.002s-0.033,0.002-0.05,0.002
+                                c-0.983-0.002-1.935-0.124-2.854-0.336l-2.885-3.411l3.254-4.847h2.535h2.535l3.254,4.847L18.65,28.107z M23.214,23.607
+                                l-3.331-4.965l1.295-4.27l5.115-1.344l2.155,3.593c-0.132,1.901-0.673,3.687-1.55,5.267L23.214,23.607z"/>
+                        </g>
+                    </svg>
+                `;
+
+                // Append the timestamp and icon to the new score entry
+                newScoreEntry.appendChild(svgIcon);
+                newScoreEntry.appendChild(timeText);
+
+                // Append the new score entry to the history
+                scoreHistory.appendChild(newScoreEntry);
+            }
+
+            function decrementScore(team) {
+                if (
+                    (team === "team1" && team1Score > 0) ||
+                    (team === "team2" && team2Score > 0)
+                ) {
+                    if (team === "team1") {
+                        team1Score--;
+                    } else {
+                        team2Score--;
+                    }
+                    updateScoreDisplay();
+                }
+            }
+
+            function triggerRainbowAnimation() {
+                const rainbowAnimation =
+                    document.getElementById("rainbowAnimation");
+                rainbowAnimation.classList.remove("hidden"); // Show the animation
+
+                // Optionally hide the animation after some time
+                setTimeout(() => {
+                    rainbowAnimation.classList.add("hidden");
+                }, 1500); // Adjust time as needed
+            }
+
+            function updateScoreDisplay() {
+                document.getElementById(
+                    "scoreDisplay"
+                ).textContent = `${team1Score} : ${team2Score}`;
+            }
+
+            function startTimer() {
+                const timeInput = document
+                    .getElementById("timerInput")
+                    .value.split(":");
+                const hours = parseInt(timeInput[0], 10) || 0;
+                const minutes = parseInt(timeInput[1], 10) || 0;
+                const seconds = parseInt(timeInput[2], 10) || 0;
+
+                // Calculate total time in seconds
+                time = hours * 3600 + minutes * 60 + seconds;
+
+                if (timer) {
+                    clearInterval(timer);
+                }
+
+                timer = setInterval(() => {
+                    time--;
+                    updateTimerDisplay();
+                    if (time <= 0) {
+                        stopTimer();
+                    }
+                }, 1000);
+            }
+
+            function resetScores() {
+                team1Score = 0;
+                team2Score = 0;
+                updateScoreDisplay();
+                document.getElementById("scoreHistory").innerHTML = ""; // Clear the score history
+            }
+
+            function stopTimer() {
+                clearInterval(timer);
+                timerRunning = false; // Timer is stopped, but elapsed time is preserved
+            }
+
+            function resetTimer() {
+                stopTimer();
+                elapsedTime = 0; // Reset the elapsed time
+                document.getElementById("timerInput").value = "10:00:00"; // Reset timer input display
+                resetScores(); // Reset the scores and score history
+            }
+
+            function updateTimerDisplay() {
+                const hours = Math.floor((initialTime - elapsedTime) / 3600);
+                const minutes = Math.floor(
+                    ((initialTime - elapsedTime) % 3600) / 60
+                );
+                const seconds = (initialTime - elapsedTime) % 60;
+
+                document.getElementById("timerInput").value = `${String(
+                    hours
+                ).padStart(2, "0")}:${String(minutes).padStart(
+                    2,
+                    "0"
+                )}:${String(seconds).padStart(2, "0")}`;
+            }
+
+            let initialTime; // Initial game time in seconds
+            let elapsedTime = 0; // Time elapsed since the game started
+            let timerRunning = false; // Track if the timer is running
+
+            function startTimer() {
+                const timeInput = document
+                    .getElementById("timerInput")
+                    .value.split(":");
+                const hours = parseInt(timeInput[0], 10) || 0;
+                const minutes = parseInt(timeInput[1], 10) || 0;
+                const seconds = parseInt(timeInput[2], 10) || 0;
+
+                // Calculate total time in seconds if starting for the first time
+                if (elapsedTime === 0) {
+                    initialTime = hours * 3600 + minutes * 60 + seconds;
+                }
+
+                if (timer) {
+                    clearInterval(timer);
+                }
+
+                timerRunning = true; // Timer is now running
+
+                timer = setInterval(() => {
+                    elapsedTime++; // Track the elapsed time since the timer started
+                    updateTimerDisplay();
+                    if (initialTime - elapsedTime <= 0) {
+                        stopTimer(); // Stop the timer when it runs out
+                    }
+                }, 1000);
             }
         </script>
     </body>
